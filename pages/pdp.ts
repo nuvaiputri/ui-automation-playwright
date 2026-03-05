@@ -1,5 +1,5 @@
 import { Page, Locator, Expect } from "@playwright/test";
-import { promises } from "node:dns";
+
 
 export class productDetailPage{
     readonly page: Page;
@@ -9,6 +9,7 @@ export class productDetailPage{
     readonly yourEmailField: Locator;
     readonly messageField: Locator;
     readonly addToCartBtn: Locator;
+    readonly shoppingCartMenu: Locator;
 
     constructor (page: Page) {
         this.page = page;
@@ -18,6 +19,7 @@ export class productDetailPage{
         this.yourEmailField = page.locator('.sender-email');
         this.messageField = page.locator('.message');
         this.addToCartBtn = page.getByRole('button', {name: 'Add to cart'}).nth(0);
+        this.shoppingCartMenu = page.locator('#topcartlink').getByRole('link', {name: /Shopping cart/});
 
     }
 
@@ -37,5 +39,9 @@ export class productDetailPage{
 
     async clickAddToCartBtn(): Promise<void> {
         await this.addToCartBtn.click();
+    }
+
+    async clickShoppingCartMenu() {
+        await this.shoppingCartMenu.click();
     }
 }
